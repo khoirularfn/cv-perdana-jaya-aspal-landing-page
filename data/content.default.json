@@ -1,0 +1,211 @@
+{
+  "site": {
+    "title": "CV. Perdana Jaya Aspal — Jasa Pengaspalan Profesional Jabodetabek",
+    "description": "CV. Perdana Jaya Aspal — jasa pengaspalan hotmix profesional untuk perumahan, proyek konstruksi, dan kawasan industri di Jabodetabek. Survey & penawaran gratis.",
+    "brandName": "PERDANA JAYA",
+    "brandTagline": "Aspal · Jabodetabek",
+    "waNumber": "6283838781282",
+    "phone": "0838-3878-1282",
+    "waMessage": "Halo CV. Perdana Jaya Aspal, saya tertarik dengan jasa pengaspalan. Boleh minta informasi lebih lanjut?"
+  },
+  "theme": {
+    "colors": {
+      "navy": "#0A2540",
+      "blue": "#1769D6",
+      "amber": "#F6A623",
+      "wa": "#25D366",
+      "ink": "#132333",
+      "slate": "#5A6B7B",
+      "bg": "#FFFFFF",
+      "bgSoft": "#F3F7FC"
+    },
+    "fonts": {
+      "heading": "Space Grotesk",
+      "body": "Plus Jakarta Sans"
+    },
+    "radius": 16
+  },
+  "nav": {
+    "links": [
+      { "label": "Layanan", "target": "#sec-services" },
+      { "label": "Keunggulan", "target": "#sec-why" },
+      { "label": "Galeri", "target": "#sec-gallery" },
+      { "label": "Testimoni", "target": "#sec-testimonials" },
+      { "label": "Kontak", "target": "#sec-cta" }
+    ]
+  },
+  "sections": [
+    {
+      "id": "sec-hero",
+      "type": "hero",
+      "enabled": true,
+      "data": {
+        "eyebrow": "CV. Perdana Jaya Aspal · Jabodetabek",
+        "titleBefore": "Jasa Pengaspalan ",
+        "titleHighlight": "Profesional",
+        "titleAfter": " & Tahan Lama",
+        "lead": "Pengerjaan aspal hotmix berkualitas untuk perumahan, proyek konstruksi, dan kawasan industri. Hasil rapi, padat, dan kuat menahan beban — dikerjakan tim berpengalaman dengan peralatan profesional.",
+        "primaryLabel": "Konsultasi via WhatsApp",
+        "secondaryLabel": "Lihat Layanan Kami",
+        "secondaryTarget": "#sec-services",
+        "trust": [
+          "Survey & Penawaran Gratis",
+          "Garansi Pengerjaan",
+          "Berpengalaman Bertahun-tahun"
+        ],
+        "image": "assets/img/img-033.jpg",
+        "floatCard1Title": "Hotmix",
+        "floatCard1Sub": "Material berkualitas",
+        "floatCard2Title": "Rapi & Padat",
+        "floatCard2Sub": "Hasil tahan lama"
+      }
+    },
+    {
+      "id": "sec-stats",
+      "type": "stats",
+      "enabled": true,
+      "data": {
+        "items": [
+          { "value": "10+", "label": "Tahun Pengalaman" },
+          { "value": "100+", "label": "Proyek Selesai" },
+          { "value": "5", "label": "Wilayah Jabodetabek" },
+          { "value": "100%", "label": "Garansi Mutu Pekerjaan" }
+        ]
+      }
+    },
+    {
+      "id": "sec-services",
+      "type": "services",
+      "enabled": true,
+      "data": {
+        "eyebrow": "Katalog Layanan",
+        "title": "Solusi Pengaspalan Lengkap",
+        "subtitle": "Dari survey hingga finishing, kami menangani seluruh tahapan pekerjaan aspal dengan standar mutu yang konsisten.",
+        "items": [
+          { "icon": "chart", "title": "Pengaspalan Hotmix", "desc": "Lapisan aspal panas (hotmix) untuk permukaan jalan yang halus, padat, dan mampu menahan beban kendaraan berat." },
+          { "icon": "layers", "title": "Aspal Penetrasi (Lapen)", "desc": "Solusi ekonomis untuk jalan lingkungan, gang, dan area dengan lalu lintas ringan hingga sedang." },
+          { "icon": "wrench", "title": "Pemeliharaan & Perbaikan", "desc": "Penambalan lubang, overlay, dan perbaikan permukaan jalan yang rusak agar kembali mulus dan aman." },
+          { "icon": "grid", "title": "Area Parkir & Halaman", "desc": "Pengaspalan area parkir, halaman pabrik, gudang, dan kompleks komersial dengan permukaan rata." },
+          { "icon": "home", "title": "Persiapan & Leveling", "desc": "Pemadatan, perataan, dan pengukuran lahan sebelum pengaspalan untuk hasil yang presisi dan kokoh." },
+          { "icon": "road", "title": "Marka & Finishing", "desc": "Pengecatan marka jalan, pembatas, dan penyelesaian akhir agar area lebih tertata dan profesional." }
+        ]
+      }
+    },
+    {
+      "id": "sec-why",
+      "type": "why",
+      "enabled": true,
+      "data": {
+        "eyebrow": "Mengapa Memilih Kami",
+        "title": "Dipercaya karena Hasil & Komitmen",
+        "image": "assets/img/img-073.jpg",
+        "features": [
+          { "icon": "star", "title": "Pengalaman Bertahun-tahun", "desc": "Telah menangani beragam proyek pengaspalan di seluruh wilayah Jabodetabek." },
+          { "icon": "users", "title": "Tim & Operator Profesional", "desc": "Dikerjakan oleh tenaga ahli dengan peralatan yang memadai untuk hasil maksimal." },
+          { "icon": "shield", "title": "Garansi Hasil Pekerjaan", "desc": "Kami bertanggung jawab atas mutu pekerjaan dengan jaminan hasil sesuai kesepakatan." },
+          { "icon": "clock", "title": "Tepat Waktu & Transparan", "desc": "Penawaran harga jelas tanpa biaya tersembunyi, dan pengerjaan sesuai jadwal." }
+        ]
+      }
+    },
+    {
+      "id": "sec-process",
+      "type": "process",
+      "enabled": true,
+      "data": {
+        "eyebrow": "Cara Kerja",
+        "title": "Proses Mudah, Hasil Maksimal",
+        "subtitle": "Empat langkah sederhana dari konsultasi awal hingga jalan siap digunakan.",
+        "steps": [
+          { "title": "Survey Lokasi", "desc": "Tim kami meninjau lokasi untuk mengukur luas area dan kebutuhan material — gratis." },
+          { "title": "Penawaran Harga", "desc": "Anda menerima rincian penawaran yang jelas dan transparan sesuai kondisi lapangan." },
+          { "title": "Pengerjaan", "desc": "Pengaspalan dilakukan tim profesional dengan material dan peralatan berkualitas." },
+          { "title": "Serah Terima", "desc": "Pengecekan akhir bersama, area siap digunakan, dengan garansi pekerjaan." }
+        ]
+      }
+    },
+    {
+      "id": "sec-segments",
+      "type": "segments",
+      "enabled": true,
+      "data": {
+        "eyebrow": "Untuk Siapa",
+        "title": "Melayani Berbagai Kebutuhan",
+        "subtitle": "Solusi pengaspalan yang disesuaikan untuk setiap jenis proyek dan kawasan.",
+        "items": [
+          { "title": "Perumahan & Cluster", "desc": "Jalan lingkungan, akses cluster, dan kompleks hunian.", "image": "assets/img/img-044.jpg" },
+          { "title": "Proyek Konstruksi", "desc": "Akses jalan proyek, infrastruktur, dan area pengembangan.", "image": "assets/img/img-062.jpg" },
+          { "title": "Kawasan Industri", "desc": "Area pabrik, pergudangan, parkir, dan jalur logistik berat.", "image": "assets/img/img-065.jpg" }
+        ]
+      }
+    },
+    {
+      "id": "sec-gallery",
+      "type": "gallery",
+      "enabled": true,
+      "data": {
+        "eyebrow": "Galeri Proyek",
+        "title": "Hasil Pengerjaan Kami",
+        "subtitle": "Dokumentasi proyek pengaspalan yang telah kami selesaikan di berbagai lokasi.",
+        "filters": [
+          { "key": "all", "label": "Semua" },
+          { "key": "perumahan", "label": "Perumahan" },
+          { "key": "konstruksi", "label": "Konstruksi" },
+          { "key": "industri", "label": "Industri" }
+        ],
+        "items": [
+          { "image": "assets/img/img-041.jpg", "cat": "perumahan", "caption": "Jalan cluster perumahan" },
+          { "image": "assets/img/img-004.jpg", "cat": "konstruksi", "caption": "Akses jalan proyek" },
+          { "image": "assets/img/img-060.jpg", "cat": "industri", "caption": "Area parkir kawasan industri" },
+          { "image": "assets/img/img-086.jpg", "cat": "industri", "caption": "Jalur logistik gudang" },
+          { "image": "assets/img/img-037.jpg", "cat": "perumahan", "caption": "Jalan akses hunian" },
+          { "image": "assets/img/img-075.jpg", "cat": "konstruksi", "caption": "Overlay jalan utama" }
+        ]
+      }
+    },
+    {
+      "id": "sec-testimonials",
+      "type": "testimonials",
+      "enabled": true,
+      "data": {
+        "eyebrow": "Testimoni",
+        "title": "Apa Kata Pelanggan",
+        "subtitle": "Kepercayaan pelanggan adalah hasil dari pekerjaan yang kami selesaikan dengan baik.",
+        "items": [
+          { "quote": "Pengerjaan jalan cluster kami rapi dan cepat. Hasil aspalnya padat, sampai sekarang masih mulus. Timnya juga komunikatif dari awal survey.", "name": "Bpk. Andi", "role": "Pengembang Perumahan", "rating": 5 },
+          { "quote": "Untuk akses jalan proyek kami butuh pengerjaan cepat dan kuat. Perdana Jaya menyelesaikan tepat waktu dengan harga yang masuk akal.", "name": "Ibu Sari", "role": "Manajer Proyek Konstruksi", "rating": 5 },
+          { "quote": "Area parkir pabrik kami diaspal ulang dan hasilnya sangat memuaskan. Permukaannya rata, kuat menahan truk berat. Recommended!", "name": "Bpk. Hendra", "role": "Pengelola Kawasan Industri", "rating": 5 }
+        ]
+      }
+    },
+    {
+      "id": "sec-cta",
+      "type": "cta",
+      "enabled": true,
+      "data": {
+        "eyebrow": "Hubungi Kami",
+        "title": "Siap Memulai Proyek Pengaspalan Anda?",
+        "subtitle": "Konsultasi, survey lokasi, dan penawaran harga sepenuhnya gratis. Hubungi kami langsung via WhatsApp — kami siap merespons cepat di jam kerja.",
+        "primaryLabel": "Chat via WhatsApp Sekarang",
+        "chips": [
+          "Melayani Jabodetabek",
+          "Senin–Sabtu, jam kerja",
+          "Survey & Penawaran Gratis"
+        ]
+      }
+    }
+  ],
+  "footer": {
+    "about": "CV. Perdana Jaya Aspal — jasa pengaspalan profesional untuk perumahan, proyek konstruksi, dan kawasan industri di seluruh Jabodetabek.",
+    "colServices": { "title": "Layanan", "links": ["Pengaspalan Hotmix", "Aspal Penetrasi", "Perbaikan Jalan", "Area Parkir", "Marka & Finishing"] },
+    "colNav": { "title": "Navigasi", "links": [
+      { "label": "Keunggulan", "target": "#sec-why" },
+      { "label": "Galeri Proyek", "target": "#sec-gallery" },
+      { "label": "Testimoni", "target": "#sec-testimonials" },
+      { "label": "Minta Penawaran", "target": "#sec-cta" }
+    ] },
+    "areaTitle": "Area Layanan",
+    "areas": ["Jakarta", "Bogor", "Depok", "Tangerang", "Bekasi", "& sekitarnya"],
+    "copyright": "© 2026 CV. Perdana Jaya Aspal. Seluruh hak cipta dilindungi.",
+    "tagline": "Jasa Pengaspalan Profesional · Jabodetabek"
+  }
+}
