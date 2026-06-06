@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../cms/admin.css">
+<link rel="stylesheet" href="../cms/admin.css?v=20260607-0026">
 </head>
 <body>
 
@@ -40,7 +40,7 @@
 <!-- ============ EDITABLE PREVIEW ============ -->
 <div id="stage" class="stage">
   <div class="frame-wrap">
-    <iframe id="previewFrame" src="../index.html" title="Editor"></iframe>
+    <iframe id="previewFrame" src="../index.html?v=20260607-0026" title="Editor"></iframe>
   </div>
 </div>
 
@@ -48,6 +48,12 @@
 <aside id="themeDrawer" class="drawer">
   <div class="dh"><h3>🎨 Tema</h3><button id="themeClose" class="tbtn ghost">✕</button></div>
   <div id="themeBody" class="dbody"></div>
+</aside>
+
+<!-- ============ SETTINGS DRAWER ============ -->
+<aside id="setDrawer" class="drawer">
+  <div class="dh"><h3>⚙ Pengaturan</h3><button id="setClose" class="tbtn ghost">✕</button></div>
+  <div id="setBody" class="dbody"></div>
 </aside>
 <div id="backdrop" class="backdrop"></div>
 
@@ -78,14 +84,14 @@
 <div id="toast" class="toast"></div>
 
 <!-- portable CMS core -->
-<script src="../cms/cms.js"></script>
+<script src="../cms/cms.js?v=20260607-0026"></script>
 <!-- this project (site) -->
-<script src="../site/icons.js"></script>
-<script src="../site/content.js"></script>
-<script src="../site/images.js"></script>
-<script src="../site/sections.js"></script>
-<script src="../site/config.js"></script>
+<script src="../site/icons.js?v=20260607-0026"></script>
+<script src="../site/content.js?v=20260607-0026"></script>
+<script src="../site/images.js?v=20260607-0026"></script>
+<script src="../site/sections.js?v=20260607-0026"></script>
+<script src="../site/config.js?v=20260607-0026"></script>
 <!-- admin controller -->
-<script src="../cms/admin.js"></script>
+<script src="../cms/admin.js?v=20260607-0026"></script>
 </body>
 </html>

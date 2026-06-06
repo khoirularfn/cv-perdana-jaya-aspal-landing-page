@@ -62,7 +62,7 @@
     IMAGES().forEach(src=>{ const im=document.createElement('img'); im.src='../'+src; im.loading='lazy'; im.onclick=()=>applyImg(src); g.appendChild(im); });
     $('#imgModal').classList.add('open');
   }
-  function applyImg(src){ if(pendingImg){ CMS.set(content,pendingImg,src); pushPreview(); autosave(); } closeImg(); toast('Gambar diganti'); }
+  function applyImg(src){ if(pendingImg){ CMS.set(content,pendingImg,src); pushPreview(); autosave(); if($('#setDrawer').classList.contains('open')) buildSettings(); } closeImg(); toast('Gambar diganti'); }
   function closeImg(){ $('#imgModal').classList.remove('open'); pendingImg=null; }
   function handleUpload(file,cb){ const r=new FileReader();
     r.onload=()=>{ const img=new Image(); img.onload=()=>{ const max=1600; let w=img.width,h=img.height;
@@ -111,12 +111,40 @@
     rg.oninput=()=>{ content.theme.radius=+rg.value; rw.querySelector('label').textContent='Kelengkungan sudut: '+rg.value+'px'; pushPreview(); autosave(); };
     rw.appendChild(rg); body.appendChild(rw);
   }
-  function openTheme(){ buildTheme(); $('#themeDrawer').classList.add('open'); $('#backdrop').classList.add('show'); }
-  function closeTheme(){ $('#themeDrawer').classList.remove('open'); $('#backdrop').classList.remove('show'); }
+  function openTheme(){ buildTheme(); closeDrawers(); $('#themeDrawer').classList.add('open'); $('#backdrop').classList.add('show'); }
+  function closeDrawers(){ $('#themeDrawer').classList.remove('open'); $('#setDrawer').classList.remove('open'); $('#backdrop').classList.remove('show'); }
+
+  /* ---------- settings drawer (non-inline fields: logo, WA, SEO) ---------- */
+  function buildSettings(){ const body=$('#setBody'); body.innerHTML='';
+    (CMS.config.settings||[]).forEach(s=>{
+      const w=document.createElement('div'); w.className='field'; w.innerHTML=`<label>${s.label}</label>`;
+      if(s.type==='image'){
+        const box=document.createElement('div'); box.className='imgfield';
+        const im=document.createElement('img'); im.className='thumb'; const cur=CMS.get(content,s.key); im.src=cur?('../'+cur.replace(/^\.\.\//,'')):''; im.alt='';
+        if(!cur){ im.style.display='none'; }
+        const acts=document.createElement('div'); acts.className='imgacts';
+        const pick=document.createElement('button'); pick.className='tbtn'; pick.textContent='🖼️ Pilih / Upload';
+        pick.onclick=()=>{ pendingImg=s.key; openImg(); };
+        const clr=document.createElement('button'); clr.className='tbtn ghost'; clr.textContent='Hapus';
+        clr.onclick=()=>{ CMS.set(content,s.key,''); pushPreview(); autosave(); buildSettings(); };
+        acts.append(pick,clr); box.append(im,acts); w.appendChild(box);
+      } else {
+        const inp=s.type==='textarea'?document.createElement('textarea'):document.createElement('input');
+        if(s.type!=='textarea') inp.type='text';
+        inp.value=CMS.get(content,s.key)??'';
+        inp.oninput=()=>{ CMS.set(content,s.key,inp.value); pushPreview(); autosave(); };
+        w.appendChild(inp);
+      }
+      body.appendChild(w);
+    });
+  }
+  function openSettings(){ buildSettings(); closeDrawers(); $('#setDrawer').classList.add('open'); $('#backdrop').classList.add('show'); }
 
   /* ---------- toolbar ---------- */
   function wire(){
-    $('#btnTheme').onclick=openTheme; $('#themeClose').onclick=closeTheme; $('#backdrop').onclick=closeTheme;
+    $('#btnTheme').onclick=openTheme; $('#themeClose').onclick=closeDrawers;
+    $('#btnSettings').onclick=openSettings; $('#setClose').onclick=closeDrawers;
+    $('#backdrop').onclick=closeDrawers;
     $('#btnAddSec').onclick=openAdd; $('#addClose').onclick=()=>$('#addModal').classList.remove('open');
     $('#imgClose').onclick=closeImg; $('#imgModal').onclick=e=>{ if(e.target===$('#imgModal'))closeImg(); };
     $('#iconClose').onclick=()=>$('#iconModal').classList.remove('open'); $('#iconModal').onclick=e=>{ if(e.target===$('#iconModal'))$('#iconModal').classList.remove('open'); };
