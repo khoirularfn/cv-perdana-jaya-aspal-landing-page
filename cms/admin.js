@@ -347,6 +347,30 @@
     document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{ device=b.dataset.dev; document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('active',x===b)); $('#stage').classList.toggle('tablet',device==='tablet'); $('#stage').classList.toggle('phone',device==='phone'); });
     window.addEventListener('keydown',e=>{ if((e.metaKey||e.ctrlKey)&&e.key==='s'){ e.preventDefault(); saveNow(); toast('Disimpan di browser'); } });
   }
+  function wireStageMotion(){
+    const stage=$('#stage');
+    if(!stage||stage._stageMotion) return;
+    stage._stageMotion=1;
+    let raf=0, idle=0, next=null;
+    const hide=()=>stage.classList.remove('stage-lit');
+    const update=e=>{
+      const r=stage.getBoundingClientRect();
+      if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom){ hide(); return; }
+      next={x:e.clientX-r.left,y:e.clientY-r.top};
+      if(raf) return;
+      raf=requestAnimationFrame(()=>{
+        raf=0;
+        stage.style.setProperty('--stage-x',next.x+'px');
+        stage.style.setProperty('--stage-y',next.y+'px');
+        stage.classList.add('stage-lit');
+        clearTimeout(idle);
+        idle=setTimeout(hide,520);
+      });
+    };
+    window.addEventListener('pointermove',update,{passive:true});
+    window.addEventListener('mousemove',update,{passive:true});
+    stage.addEventListener('pointerleave',()=>{ clearTimeout(idle); idle=setTimeout(hide,160); });
+  }
 
   /* ---------- publish: write site/content.js live (needs serve.mjs) or fall back to download ---------- */
   async function publish(){
@@ -385,6 +409,6 @@
     document.querySelectorAll('.tbtn.ghost').forEach(b=>{ if(/Tutup|✕/.test(b.textContent)) b.innerHTML=uiSvg('close')+'<span>Tutup</span>'; });
   }
 
-  function boot(){ wire(); paintIcons(); const f=frame(); f.addEventListener('load',()=>setTimeout(pushPreview,80)); [120,400,800,1500].forEach(t=>setTimeout(pushPreview,t)); }
+  function boot(){ wire(); paintIcons(); wireStageMotion(); const f=frame(); f.addEventListener('load',()=>setTimeout(pushPreview,80)); [120,400,800,1500].forEach(t=>setTimeout(pushPreview,t)); }
   if(document.readyState!=='loading') boot(); else document.addEventListener('DOMContentLoaded',boot);
 })();

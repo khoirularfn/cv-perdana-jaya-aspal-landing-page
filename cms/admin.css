@@ -36,11 +36,19 @@ input,textarea,select{font-family:inherit}
 .hintbar b{color:#cfe0f5}
 
 /* stage / preview */
-.stage{height:calc(100vh - 88px);overflow:auto;display:flex;justify-content:center;padding:0;background:repeating-conic-gradient(#0b131d 0% 25%, #0d1622 0% 50%) 50%/24px 24px}
-.frame-wrap{width:100%;height:100%;transition:width .3s, margin .3s}
+.stage{--stage-x:50%;--stage-y:50%;height:calc(100vh - 88px);overflow:auto;display:flex;justify-content:center;padding:0;position:relative;isolation:isolate;background:#191a1d;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.stage::before,.stage::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none}
+.stage::before{background-image:radial-gradient(circle,rgba(255,255,255,.22) 0 1px,transparent 1.7px),radial-gradient(circle at 50% 35%,transparent 0,rgba(0,0,0,.18) 62%,rgba(0,0,0,.42) 100%);background-size:16px 16px,100% 100%;background-position:0 0,0 0;opacity:.46}
+.stage::after{background-image:radial-gradient(circle,rgba(255,255,255,.92) 0 1px,rgba(135,119,255,.78) 1.05px 1.8px,transparent 2.45px);background-size:16px 16px;background-position:0 0;opacity:0;transition:opacity .32s ease;mask-image:radial-gradient(circle 170px at var(--stage-x) var(--stage-y),#000 0 34%,rgba(0,0,0,.86) 48%,rgba(0,0,0,.34) 68%,transparent 100%);-webkit-mask-image:radial-gradient(circle 170px at var(--stage-x) var(--stage-y),#000 0 34%,rgba(0,0,0,.86) 48%,rgba(0,0,0,.34) 68%,transparent 100%)}
+.stage.stage-lit::after{opacity:1}
+.frame-wrap{width:100%;height:100%;transition:width .3s, margin .3s;position:relative;z-index:1}
 .stage.tablet .frame-wrap{width:768px;max-width:calc(100% - 28px);margin:18px 0;height:calc(100% - 36px);border-radius:18px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.5)}
 .stage.phone .frame-wrap{width:390px;margin:18px 0;height:calc(100% - 36px);border-radius:18px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.5)}
 iframe{width:100%;height:100%;border:none;background:#fff;display:block}
+
+@media(prefers-reduced-motion:reduce){
+  .stage::after{display:none}
+}
 
 /* generic panel (theme drawer) */
 .drawer{position:fixed;top:60px;right:0;bottom:0;width:min(440px,94vw);background:var(--a-panel);border-left:1px solid var(--a-line);z-index:40;transform:translateX(105%);transition:transform .25s;overflow-y:auto;box-shadow:-12px 0 40px rgba(0,0,0,.35)}
