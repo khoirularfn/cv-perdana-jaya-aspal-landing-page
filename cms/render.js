@@ -13,6 +13,12 @@
   let globalsWired=false;
 
   function reg(){ return CMS.config.sections||{}; }
+  function sectionId(s,i){
+    return String(s.id||('sec-'+(s.type||'section')+'-'+(i+1)))
+      .toLowerCase()
+      .replace(/[^a-z0-9_-]+/g,'-')
+      .replace(/^-+|-+$/g,'') || ('sec-section-'+(i+1));
+  }
 
   function buildBody(c, edit){
     const R=reg();
@@ -22,8 +28,11 @@
       if(!def||def.chrome) return def?'' : `<!-- unknown section: ${esc(s.type)} -->`;
       let html; try{ html=def.render(s.data||{}, c.site, 'sections.'+i+'.data'); }
       catch(e){ console.error('render error', s.type, e); return ''; }
-      const attrs='data-secidx="'+i+'" data-sectype="'+s.type+'"'+(s.enabled===false?' data-hidden="1"':'');
-      return html.replace('<section','<section '+attrs);
+      const attrs='id="'+esc(sectionId(s,i))+'" data-secidx="'+i+'" data-sectype="'+esc(s.type)+'"'+(s.enabled===false?' data-hidden="1"':'');
+      return html.replace(/<section\b([^>]*)>/i,(_,rawAttrs)=>{
+        const cleaned=String(rawAttrs||'').replace(/\s+id=(["']).*?\1/i,'');
+        return '<section '+attrs+cleaned+'>';
+      });
     }).join('\n');
   }
 
@@ -40,6 +49,13 @@
     ensureChrome();
     wire(c, opts);
     document.body.classList.toggle('cms-editing', !!opts.edit);
+    if(!opts.edit){
+      // lite mode = old/low-power phones or reduced-motion: drop continuous decorative loops
+      const lite = matchMedia('(prefers-reduced-motion: reduce)').matches
+        || (navigator.deviceMemory && navigator.deviceMemory<=4)
+        || (navigator.hardwareConcurrency && navigator.hardwareConcurrency<=4);
+      document.body.classList.toggle('lite', !!lite);
+    }
     if(opts.edit && CMS.initEdit) CMS.initEdit();
   }
 

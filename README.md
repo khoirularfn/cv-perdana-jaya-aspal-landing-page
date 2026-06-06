@@ -37,13 +37,15 @@ perdana-jaya-landing/
 
 ```bash
 cd perdana-jaya-landing
-python3 -m http.server
+node serve.mjs          # ← disarankan: server ini mengaktifkan tombol "Publish" 1-klik
+# atau: python3 -m http.server   (tanpa Publish; pakai Export lalu upload manual)
 ```
 
 - Landing page : http://localhost:8000/
 - Admin panel  : http://localhost:8000/adminpanel/
 
-> Bisa juga dibuka langsung (double-click `index.html`), tapi **untuk menyimpan** perubahan di admin, gunakan server lokal atau tombol **Export JSON** (localStorage sering diblokir di mode `file://`).
+> **Publish 1-klik** hanya jalan lewat `node serve.mjs` (server menulis `site/content.js`).
+> Di hosting statis biasa, tombol Publish otomatis jadi **download `content.js`** untuk di-upload manual.
 
 ## Cara pakai admin (edit LANGSUNG di halaman — gaya Elementor)
 
@@ -59,19 +61,20 @@ Buka `/adminpanel`. Yang tampil adalah halaman aslinya yang bisa langsung diedit
 - **🎨 Tema** (toolbar) — ubah warna brand, font, dan kelengkungan sudut, preview langsung.
 - **🖥/📱** — pratinjau tampilan desktop vs HP.
 
-Semua perubahan **tersimpan otomatis** ke browser (atau tekan ⌘/Ctrl+S). Untuk publish ke pengunjung, klik **⬇ Export** lalu ikuti langkah di bawah.
+Semua perubahan **tersimpan otomatis** ke browser (atau tekan ⌘/Ctrl+S).
 
 ## Publish perubahan
 
-Karena tanpa database, alur publish:
-1. Edit di admin → **⬇ Export** (dapat file `content.json`).
-2. Regenerate seed `site/content.js`, lalu upload folder ke hosting statis:
+- **Cara 1 — tombol Publish (1 klik).** Jalankan `node serve.mjs`, lalu di admin klik
+  **Publish**. Server menulis ulang `site/content.js` → perubahan langsung tayang untuk
+  semua pengunjung. Tinggal upload folder ke hosting.
+- **Cara 2 — manual (hosting statis).** Klik **Export** (dapat `content.json`), lalu
+  regenerate seed:
 ```bash
 python3 - content.json <<'PY'
-import json,sys
+import json
 d=json.load(open("content.json"))
 open("site/content.js","w").write("/* AUTO-GENERATED */\nwindow.DEFAULT_CONTENT = "+json.dumps(d,ensure_ascii=False,indent=2)+";\n")
-print("updated site/content.js")
 PY
 ```
 

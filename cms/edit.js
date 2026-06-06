@@ -39,6 +39,9 @@
     [data-hidden]::after{content:"Tersembunyi di situs publik";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(10,20,34,.55) 0 14px,rgba(10,20,34,.42) 14px 28px);display:flex;align-items:center;justify-content:center;color:#fff;font:700 14px system-ui;z-index:40;pointer-events:none}
     .cms-imgbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:45;background:#0f1c2e;border:1px solid #2b8bff;color:#fff;font:600 13px system-ui;padding:9px 14px;border-radius:10px;cursor:pointer;display:flex;gap:7px;align-items:center;opacity:0;transition:opacity .15s;box-shadow:0 8px 24px rgba(0,0,0,.4)}
     .cms-imgwrap:hover .cms-imgbtn{opacity:1}
+    .brand-mark-wrap.cms-imgwrap{overflow:visible!important}
+    .brand-mark-wrap .cms-imgbtn{font-size:0;width:34px;height:34px;padding:0;border-radius:11px}
+    .brand-mark-wrap .cms-imgbtn svg{margin:0!important;width:17px;height:17px}
     .cms-add{display:flex;align-items:center;justify-content:center;gap:8px;min-height:90px;border:2px dashed #9bb6d6;border-radius:14px;color:#5772a0;background:rgba(43,139,255,.05);font:700 14px system-ui;cursor:pointer;width:100%}
     .cms-add:hover{border-color:#2b8bff;color:#2b8bff;background:rgba(43,139,255,.12)}
     .cms-catsel{position:absolute;left:8px;bottom:8px;z-index:46;font:600 12px system-ui;border:1px solid #2b8bff;border-radius:8px;padding:5px 8px;background:#0f1c2e;color:#fff}
@@ -63,12 +66,12 @@
     el.addEventListener('input',()=>{ clearTimeout(tTimer); const path=el.getAttribute('data-e'), value=el.textContent; tTimer=setTimeout(()=>send({op:'text',path,value}),180); });
     el.addEventListener('paste',e=>{ e.preventDefault(); const t=(e.clipboardData||window.clipboardData).getData('text'); document.execCommand('insertText',false,t); }); }); }
 
-  function bindImages(){ document.querySelectorAll('[data-img]').forEach(img=>{ if(img._i)return; img._i=1;
-    const path=img.getAttribute('data-img'); const host=img.parentElement;
+  function bindImages(){ document.querySelectorAll('[data-img]').forEach(target=>{ if(target._i)return; target._i=1;
+    const path=target.getAttribute('data-img'); const host=target.tagName&&target.tagName.toLowerCase()==='img' ? target.parentElement : target;
     if(getComputedStyle(host).position==='static') host.style.position='relative'; host.classList.add('cms-imgwrap');
-    const b=document.createElement('div'); b.className='cms-imgbtn'; b.innerHTML='🖼️ Ganti Gambar';
+    const b=document.createElement('div'); b.className='cms-imgbtn'; b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:6px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Ganti Gambar';
     b.addEventListener('click',e=>{ e.stopPropagation(); send({op:'image',path}); }); host.appendChild(b);
-    img.addEventListener('click',e=>{ e.stopPropagation(); send({op:'image',path}); }); }); }
+    target.addEventListener('click',e=>{ e.stopPropagation(); send({op:'image',path}); }); }); }
 
   function bindIcons(){ document.querySelectorAll('[data-icon]').forEach(el=>{ if(el._ic)return; el._ic=1; el.style.cursor='pointer'; el.title='Klik untuk ganti ikon';
     el.addEventListener('click',e=>{ e.stopPropagation(); send({op:'icon',path:el.getAttribute('data-icon')}); }); }); }

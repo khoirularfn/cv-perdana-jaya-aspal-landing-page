@@ -3,95 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel — CV. Perdana Jaya Aspal</title>
+<title>Admin Panel</title>
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><rect width='48' height='48' rx='12' fill='%230a2540'/><path d='M24 39 L24 13' stroke='%23F6A623' stroke-width='3' stroke-dasharray='4 3.4' stroke-linecap='round'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../cms/admin.css?v=20260607-0026">
+<link rel="stylesheet" href="../cms/admin.css?v=20260607-tmpl">
 </head>
 <body>
-
-<!-- ============ TOPBAR ============ -->
 <header class="topbar">
   <div class="logo">
-    <span class="dot"><svg viewBox="0 0 48 48" width="20" height="20"><path d="M14.5 40 L21.4 12 L26.6 12 L33.5 40 Z" fill="#3e4b58"/><path d="M24 39 L24 13" stroke="#F6A623" stroke-width="2.6" stroke-dasharray="4 3.4" stroke-linecap="round"/></svg></span>
-    <span class="hide-sm">Admin Panel<small>CV. PERDANA JAYA ASPAL</small></span>
+    <span class="dot">
+      <img src="../assets/inovtek-studio-logo.jpeg" alt="Inovtek Studio">
+    </span>
+    <span class="hide-sm">Admin Panel<small>by Inovtek Studio</small></span>
   </div>
-  <span id="saved" class="saved">✓ Tersimpan</span>
+  <span id="saved" class="saved" aria-live="polite"></span>
   <div class="spacer"></div>
   <div class="seg hide-sm">
-    <button class="active" data-dev="desktop">🖥 Desktop</button>
-    <button data-dev="phone">📱 HP</button>
+    <button class="active" data-dev="desktop">Desktop</button>
+    <button data-dev="tablet">Tablet</button>
+    <button data-dev="phone">HP</button>
   </div>
-  <button id="btnAddSec" class="tbtn">＋ Section</button>
-  <button id="btnSettings" class="tbtn">⚙ Pengaturan</button>
-  <button id="btnTheme" class="tbtn">🎨 Tema</button>
-  <button id="btnImport" class="tbtn ghost hide-sm">⬆ Import</button>
+  <button id="btnAddSec" class="tbtn">Section</button>
+  <button id="btnSettings" class="tbtn">Pengaturan</button>
+  <button id="btnTheme" class="tbtn">Tema</button>
+  <button id="btnImport" class="tbtn ghost hide-sm">Import</button>
   <input id="importFile" type="file" accept="application/json,.json" style="display:none">
-  <button id="btnReset" class="tbtn ghost hide-sm">↺ Reset</button>
-  <button id="btnExport" class="tbtn">⬇ Export</button>
-  <button id="btnSite" class="tbtn ghost hide-sm">↗ Situs</button>
+  <button id="btnReset" class="tbtn ghost hide-sm">Reset</button>
+  <button id="btnExport" class="tbtn ghost">Export</button>
+  <button id="btnSite" class="tbtn ghost hide-sm">Situs</button>
+  <button id="btnPublish" class="tbtn primary">Publish</button>
 </header>
 
-<div class="hintbar">✏️ Klik teks untuk edit langsung · arahkan ke gambar untuk <b>Ganti Gambar</b> · arahkan ke section/kartu untuk pindah, sembunyikan, atau hapus</div>
+<div class="hintbar">Edit teks langsung · ganti gambar · atur section dari toolbar.</div>
 
-<!-- ============ EDITABLE PREVIEW ============ -->
 <div id="stage" class="stage">
   <div class="frame-wrap">
-    <iframe id="previewFrame" src="../index.html?v=20260607-0026" title="Editor"></iframe>
+    <iframe id="previewFrame" src="../index.html?v=20260607-tmpl" title="Editor"></iframe>
   </div>
 </div>
 
-<!-- ============ THEME DRAWER ============ -->
 <aside id="themeDrawer" class="drawer">
-  <div class="dh"><h3>🎨 Tema</h3><button id="themeClose" class="tbtn ghost">✕</button></div>
+  <div class="dh"><h3>Tema</h3><button id="themeClose" class="tbtn ghost">Tutup</button></div>
   <div id="themeBody" class="dbody"></div>
 </aside>
 
-<!-- ============ SETTINGS DRAWER ============ -->
 <aside id="setDrawer" class="drawer">
-  <div class="dh"><h3>⚙ Pengaturan</h3><button id="setClose" class="tbtn ghost">✕</button></div>
+  <div class="dh"><h3>Pengaturan</h3><button id="setClose" class="tbtn ghost">Tutup</button></div>
   <div id="setBody" class="dbody"></div>
 </aside>
 <div id="backdrop" class="backdrop"></div>
 
-<!-- ============ IMAGE PICKER ============ -->
 <div id="imgModal" class="modal">
   <div class="modal-box">
-    <div class="mh"><h3>Pilih / Upload Gambar</h3><button id="imgClose" class="tbtn ghost">✕ Tutup</button></div>
+    <div class="mh"><h3>Pilih / Upload Gambar</h3><button id="imgClose" class="tbtn ghost">Tutup</button></div>
     <div class="modal-body"><div id="imgGrid" class="imggrid"></div></div>
   </div>
 </div>
 
-<!-- ============ ICON PICKER ============ -->
 <div id="iconModal" class="modal">
   <div class="modal-box" style="width:min(520px,96vw)">
-    <div class="mh"><h3>Pilih Ikon</h3><button id="iconClose" class="tbtn ghost">✕ Tutup</button></div>
+    <div class="mh"><h3>Pilih Ikon</h3><button id="iconClose" class="tbtn ghost">Tutup</button></div>
     <div class="modal-body"><div id="iconGrid" class="icongrid"></div></div>
   </div>
 </div>
 
-<!-- ============ ADD SECTION ============ -->
 <div id="addModal" class="modal">
   <div class="modal-box" style="width:min(640px,96vw)">
-    <div class="mh"><h3>Tambah Section</h3><button id="addClose" class="tbtn ghost">✕ Tutup</button></div>
+    <div class="mh"><h3>Tambah Section</h3><button id="addClose" class="tbtn ghost">Tutup</button></div>
     <div class="modal-body"><div id="addGrid" class="seclist"></div></div>
   </div>
 </div>
 
 <div id="toast" class="toast"></div>
 
-<!-- portable CMS core -->
-<script src="../cms/cms.js?v=20260607-0026"></script>
-<!-- this project (site) -->
-<script src="../site/icons.js?v=20260607-0026"></script>
-<script src="../site/content.js?v=20260607-0026"></script>
-<script src="../site/images.js?v=20260607-0026"></script>
-<script src="../site/sections.js?v=20260607-0026"></script>
-<script src="../site/config.js?v=20260607-0026"></script>
-<!-- admin controller -->
-<script src="../cms/admin.js?v=20260607-0026"></script>
+<script src="../cms/cms.js?v=20260607-tmpl"></script>
+<script src="../site/icons.js?v=20260607-tmpl"></script>
+<script src="../site/content.js?v=20260607-tmpl"></script>
+<script src="../site/images.js?v=20260607-tmpl"></script>
+<script src="../site/sections.js?v=20260607-tmpl"></script>
+<script src="../site/config.js?v=20260607-tmpl"></script>
+<script src="../cms/admin.js?v=20260607-tmpl"></script>
 </body>
 </html>

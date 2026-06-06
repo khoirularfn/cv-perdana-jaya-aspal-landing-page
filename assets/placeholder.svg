@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Placeholder">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3f7fc"/>
+      <stop offset="1" stop-color="#dbe8f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#g)"/>
+  <rect x="100" y="105" width="1000" height="610" rx="48" fill="none" stroke="#9fb8d4" stroke-width="6" stroke-dasharray="20 20"/>
+  <circle cx="390" cy="320" r="72" fill="#9fb8d4"/>
+  <path d="M220 640l250-250 160 160 110-110 240 240" fill="none" stroke="#1769D6" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="285" y="760" width="630" height="72" rx="36" fill="#ffffff" opacity=".76"/>
+  <text x="600" y="808" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="38" fill="#5a6b7b" font-weight="700">Upload gambar dari admin panel</text>
+</svg>
