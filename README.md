@@ -2,27 +2,36 @@
 
 Landing page modular berbasis data, plus admin panel visual (gaya Elementor) **tanpa backend/database**. Semua konten, gambar, warna, font, dan urutan section diatur lewat satu file data + editor visual.
 
-## Struktur
+## Struktur — engine portable (`cms/`) + project (`site/`)
 
 ```
 perdana-jaya-landing/
 ├── index.html              # Landing page publik (tanpa tombol admin)
-├── adminpanel/
-│   ├── index.html          # Editor visual  →  domain.com/adminpanel
-│   ├── admin.js
-│   └── admin.css
-├── assets/
-│   ├── css/theme.css       # Design token (warna, font, radius) — diubah dari admin
-│   ├── css/styles.css      # Semua style section
-│   ├── js/icons.js         # Library ikon SVG
-│   ├── js/content.default.js  # Konten awal (di-embed agar jalan via file://)
-│   ├── js/images.js        # Daftar gambar untuk image picker
-│   ├── js/store.js         # Layer data (localStorage + export/import)
-│   ├── js/sections.js      # REGISTRY section — tambah section = tambah 1 modul di sini
-│   └── js/render.js        # Mesin render: data → HTML
-├── data/content.default.json  # Sumber konten (referensi; bisa di-replace hasil Export)
+├── adminpanel/index.html   # Editor visual inline → domain.com/adminpanel
+│
+├── cms/                    # 🔌 CORE PORTABLE — copy ke project lain apa adanya
+│   ├── cms.js              # window.CMS: config, storage, path, tema, edit-binding
+│   ├── render.js           # mesin render: data → HTML (header/footer/section via registry)
+│   ├── edit.js             # overlay inline-edit (klik teks/gambar, toolbar section/item)
+│   ├── admin.js            # controller admin (data + picker + tema)
+│   ├── admin.css
+│   └── README.md           # 📖 panduan plug-and-play (untuk dev / AI)
+│
+├── site/                   # 🎨 PROJECT INI — yang diganti kalau bikin web lain
+│   ├── config.js           # CMS.configure({...})  ← satu-satunya lem
+│   ├── content.js          # DEFAULT_CONTENT (konten awal)
+│   ├── sections.js         # REGISTRY section (+ header/footer) — tambah section = 1 modul
+│   ├── icons.js            # ikon SVG + glyph WhatsApp
+│   ├── images.js           # daftar gambar untuk picker
+│   ├── theme.css           # design token (warna/font/radius)
+│   └── styles.css          # style semua section
+│
+├── data/content.default.json  # sumber konten (referensi; bisa di-replace hasil Export)
 └── assets/img/             # 91 foto proyek
 ```
+
+> **Plug & play:** untuk bikin web lain, copy folder `cms/` apa adanya, lalu tulis
+> folder `site/` baru (konten + section + tema). Panduan lengkap: [`cms/README.md`](cms/README.md).
 
 ## Cara menjalankan (disarankan lewat server lokal)
 
@@ -55,32 +64,35 @@ Semua perubahan **tersimpan otomatis** ke browser (atau tekan ⌘/Ctrl+S). Untuk
 ## Publish perubahan
 
 Karena tanpa database, alur publish:
-1. Edit di admin → **Export JSON** (dapat file `content.json`).
-2. Jalankan: `node tools/apply-content.js content.json` *(atau)* timpa `assets/js/content.default.js`
-   dengan menjalankan generator di bawah, lalu upload folder ke hosting statis.
-
-Generator embed (regenerate `content.default.js` dari sebuah `content.json`):
+1. Edit di admin → **⬇ Export** (dapat file `content.json`).
+2. Regenerate seed `site/content.js`, lalu upload folder ke hosting statis:
 ```bash
-python3 - "$PWD/content.json" <<'PY'
+python3 - content.json <<'PY'
 import json,sys
-d=json.load(open(sys.argv[1]))
-open("assets/js/content.default.js","w").write(
- "/* AUTO-GENERATED */\nwindow.DEFAULT_CONTENT = "+json.dumps(d,ensure_ascii=False,indent=2)+";\n")
-print("updated assets/js/content.default.js")
+d=json.load(open("content.json"))
+open("site/content.js","w").write("/* AUTO-GENERATED */\nwindow.DEFAULT_CONTENT = "+json.dumps(d,ensure_ascii=False,indent=2)+";\n")
+print("updated site/content.js")
 PY
 ```
 
 ## Menambah section baru (modular)
 
-Tambahkan satu entри di `assets/js/sections.js`:
+Tambahkan satu entri di `site/sections.js` (pakai binding `CMS.bindings` untuk inline-edit):
 
 ```js
 window.SECTIONS['fitur'] = {
   label:'Fitur', icon:'✨',
-  fields:[ {key:'title',label:'Judul',type:'text'}, /* ... */ ],
-  render(d, site){ return `<section class="section">...</section>`; }
+  render(d, site, P){            // P = path konten, mis. "sections.3.data"
+    const {e:A} = CMS.bindings, esc = CMS.esc;
+    return `<section class="section"><h2${A(P+'.title')}>${esc(d.title)}</h2></section>`;
+  }
 };
 ```
 
-Lalu tambahkan objek `{ "id":"sec-fitur", "type":"fitur", "enabled":true, "data":{...} }`
-ke array `sections` di konten. Otomatis muncul di LP **dan** di admin panel.
+Lalu tambah objek `{ "id":"sec-fitur", "type":"fitur", "enabled":true, "data":{...} }`
+ke array `sections`. Otomatis muncul di LP **dan** bisa diedit inline di admin.
+
+## Bikin web lain pakai engine ini (template)
+
+Copy folder `cms/` apa adanya → tulis folder `site/` baru → selesai.
+Panduan langkah-demi-langkah: **[`cms/README.md`](cms/README.md)**.

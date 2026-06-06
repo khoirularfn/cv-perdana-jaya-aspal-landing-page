@@ -25,6 +25,10 @@
   const {e:A, img:IMG, icon:ICO, list:LIST, item:ITEM, rate:RATE, cat:CATS} = CMS.bindings;
   const eA = (edit,p)=> edit?` data-e="${p}"`:'';   // header/footer pass edit flag explicitly
   const LOGO = `<svg class="brand-mark" viewBox="0 0 48 48" role="img" aria-label="logo"><defs><linearGradient id="pjN" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#17436f"/><stop offset="1" stop-color="#0a2540"/></linearGradient></defs><rect width="48" height="48" rx="12" fill="url(#pjN)"/><path d="M14.5 40 L21.4 12 L26.6 12 L33.5 40 Z" fill="#3e4b58"/><path d="M14.5 40 L21.4 12" stroke="#cdd6df" stroke-width="1.2" opacity=".4"/><path d="M33.5 40 L26.6 12" stroke="#cdd6df" stroke-width="1.2" opacity=".4"/><path d="M24 39 L24 13" stroke="#F6A623" stroke-width="2.6" stroke-dasharray="4 3.4" stroke-linecap="round"/></svg>`;
+  // logo: custom uploaded image if set, else the default mark — editable (click to replace) in edit mode
+  const brandMark = (c,edit) => c.site.logo
+    ? `<img class="brand-mark" src="${esc(c.site.logo)}" alt="logo"${edit?' data-img="site.logo"':''}>`
+    : (edit ? LOGO.replace('<svg ', '<svg data-img="site.logo" ') : LOGO);
 
   const F = {
     text:(key,label)=>({key,label,type:'text'}),
@@ -42,9 +46,9 @@
       render(c,o){ const edit=o&&o.edit;
         const links=(c.nav&&c.nav.links||[]).map((l,i)=>`<a href="${esc(l.target)}"><span${eA(edit,'nav.links.'+i+'.label')}>${esc(l.label)}</span></a>`).join('');
         return `<header id="top"><div class="wrap nav">
-      <a href="#top" class="brand">${LOGO}<div class="brand-text"><strong${eA(edit,'site.brandName')}>${esc(c.site.brandName)}</strong><small${eA(edit,'site.brandTagline')}>${esc(c.site.brandTagline)}</small></div></a>
+      <a href="#top" class="brand">${brandMark(c,edit)}<div class="brand-text"><strong${eA(edit,'site.brandName')}>${esc(c.site.brandName)}</strong><small${eA(edit,'site.brandTagline')}>${esc(c.site.brandTagline)}</small></div></a>
       <nav class="nav-links" id="navLinks">${links}</nav>
-      <div class="nav-cta"><a href="#" class="btn btn-wa wa-link">${waSvg}WhatsApp</a></div>
+      <div class="nav-cta"><a href="#" class="btn btn-wa wa-link">${waSvg}<span${eA(edit,'site.waButtonLabel')}>${esc(c.site.waButtonLabel||'WhatsApp')}</span></a></div>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div></header>`;
       }
@@ -59,7 +63,7 @@
         const areas=(f.areas||[]).map((a,i)=>`<span${eA(edit,'footer.areas.'+i)}>${esc(a)}</span>`).join('');
         return `<footer><div class="wrap">
       <div class="foot-grid">
-        <div class="foot-brand"><div class="brand">${LOGO}<div class="brand-text"><strong${eA(edit,'site.brandName')}>${esc(c.site.brandName)}</strong><small${eA(edit,'site.brandTagline')}>${esc(c.site.brandTagline)}</small></div></div><p${eA(edit,'footer.about')}>${esc(f.about)}</p></div>
+        <div class="foot-brand"><div class="brand">${brandMark(c,edit)}<div class="brand-text"><strong${eA(edit,'site.brandName')}>${esc(c.site.brandName)}</strong><small${eA(edit,'site.brandTagline')}>${esc(c.site.brandTagline)}</small></div></div><p${eA(edit,'footer.about')}>${esc(f.about)}</p></div>
         <div class="foot-col"><h5${eA(edit,'footer.colServices.title')}>${esc(f.colServices&&f.colServices.title)}</h5>${svcLinks}</div>
         <div class="foot-col"><h5${eA(edit,'footer.colNav.title')}>${esc(f.colNav&&f.colNav.title)}</h5>${navLinks}</div>
         <div class="foot-col"><h5${eA(edit,'footer.areaTitle')}>${esc(f.areaTitle)}</h5><div class="area-tags">${areas}</div>
@@ -99,11 +103,11 @@
     <div class="hero-media reveal right d2">
       <div class="hero-photo tilt"><img class="ph-img" src="${esc(d.image)}" alt="${esc(d.eyebrow)}"${IMG(P+'.image')}></div>
       <div class="float-card fc-1">
-        <div class="ic" style="background:var(--blue-50);color:var(--blue)">${svg('layers')}</div>
+        <div class="ic" style="background:var(--blue-50);color:var(--blue)"${ICO(P+'.floatCard1Icon')}>${svg(d.floatCard1Icon||'layers')}</div>
         <div><strong${A(P+'.floatCard1Title')}>${esc(d.floatCard1Title)}</strong><small${A(P+'.floatCard1Sub')}>${esc(d.floatCard1Sub)}</small></div>
       </div>
       <div class="float-card fc-2">
-        <div class="ic" style="background:#FEF3DD;color:var(--amber)">${svg('checkbox')}</div>
+        <div class="ic" style="background:#FEF3DD;color:var(--amber)"${ICO(P+'.floatCard2Icon')}>${svg(d.floatCard2Icon||'checkbox')}</div>
         <div><strong${A(P+'.floatCard2Title')}>${esc(d.floatCard2Title)}</strong><small${A(P+'.floatCard2Sub')}>${esc(d.floatCard2Sub)}</small></div>
       </div>
     </div>

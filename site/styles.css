@@ -199,6 +199,8 @@ footer{background:#08182b;color:#9fb2c6;padding:70px 0 30px}
 .foot-col a:hover{color:var(--amber)}
 .foot-col a.btn-wa,.foot-col a.btn-wa:hover{color:#fff}
 .foot-col a.btn-wa svg{color:#fff;fill:#fff}
+/* keep footer buttons flex (the generic .foot-col a{display:block} would otherwise kill gap) */
+.foot-col a.btn{display:inline-flex}
 .area-tags{display:flex;flex-wrap:wrap;gap:8px}
 .area-tags span{font-size:12.5px;background:rgba(255,255,255,.07);padding:6px 12px;border-radius:30px;color:#bcccdd}
 .foot-bottom{padding-top:26px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13.5px}
@@ -254,13 +256,16 @@ footer{background:#08182b;color:#9fb2c6;padding:70px 0 30px}
   .nav-links{display:none}
   .nav-links.mobile-open{display:flex;position:absolute;top:74px;left:0;right:0;flex-direction:column;background:#fff;padding:20px 24px;gap:4px;border-bottom:1px solid var(--line);box-shadow:var(--shadow-md)}
   .nav-links.mobile-open a{padding:12px 0;width:100%;border-bottom:1px solid var(--line)}
-  .nav-cta .btn-outline{display:none}
+  .nav-cta{display:none}            /* header WA button -> use hamburger + floating WA on mobile */
   .hamburger{display:flex}
   .svc-grid,.seg-grid,.test-grid,.gal-grid,.proc-grid{grid-template-columns:1fr}
   .stat:nth-child(odd)::after{display:none}
-  .hero h1{font-size:clamp(34px,9vw,46px)}
-  .fc-1{left:-8px;top:14px}.fc-2{right:-8px;bottom:18px}
-  .float-card{padding:12px 14px}.float-card strong{font-size:15px}
+  .hero{padding:48px 0 70px}
+  .hero h1{font-size:clamp(30px,8vw,42px)}
+  .hero p.lead{font-size:17px}
+  /* keep floating cards fully inside the viewport (was overflowing -> horizontal scroll) */
+  .fc-1{left:8px;top:12px}.fc-2{right:8px;bottom:14px}
+  .float-card{padding:11px 13px;max-width:64%}.float-card strong{font-size:15px}
   .cta-card{padding:44px 22px}
   .foot-grid{grid-template-columns:1fr}
   .wa-float .wa-label{display:none}
