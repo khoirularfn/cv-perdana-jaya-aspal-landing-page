@@ -341,7 +341,7 @@
     if(shell) shell.setAttribute('aria-hidden', ok?'false':'true');
     if(login) login.setAttribute('aria-hidden', ok?'true':'false');
     if(ok) setTimeout(pushPreview,120);
-    else setTimeout(()=>{ clearLoginFields(); const u=$('#loginUser'); if(u) u.focus(); },80);
+    else setTimeout(()=>{ const u=$('#loginUser'); if(u) u.focus(); },80);
   }
   function clearLoginFields(){
     const u=$('#loginUser'), p=$('#loginPass');
@@ -394,7 +394,7 @@
     const logout=$('#btnLogout');
     if(logout) logout.onclick=()=>{
       try{sessionStorage.removeItem(AUTH_KEY);}catch(e){}
-      if(pass) pass.value='';
+      clearLoginFields();
       closeDrawers();
       setAuthState(false);
     };

@@ -23,7 +23,7 @@ body.auth-ready .login-screen{display:none}
 .login-logo{width:44px;height:44px;border-radius:12px;overflow:hidden;background:#071a2f;display:grid;place-items:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 12px 28px rgba(0,0,0,.28)}
 .login-logo img{width:100%;height:100%;object-fit:cover;display:block}
 .login-copy{margin-bottom:22px}
-.login-copy h1{font-size:42px;line-height:1.02;letter-spacing:0;color:#fff}
+.login-copy h1{font-size:34px;line-height:1.08;letter-spacing:0;color:#fff}
 .login-form{display:flex;flex-direction:column;gap:14px}
 .login-form label{display:block}
 .login-form label>span{display:block;margin-bottom:7px;color:#dbe7f5;font-size:13px;font-weight:800}
@@ -175,7 +175,7 @@ iframe{width:100%;height:100%;border:none;background:#fff;display:block}
   .login-screen{padding:16px}
   .login-card{padding:20px;border-radius:14px}
   .login-brand{margin-bottom:22px}
-  .login-copy h1{font-size:34px}
+  .login-copy h1{font-size:30px}
   .hide-sm:not(.seg){display:none}
   .seg.hide-sm{display:flex}
   .spacer{display:none}
