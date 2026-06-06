@@ -16,6 +16,7 @@
 
   const SECTIONS=()=>CMS.config.sections||{};
   const IMAGES=()=>CMS.config.images||[];
+  const AUTH_KEY='cms_admin_auth_v1';
   const isSectionTarget=t=>/^#sec-/.test(String(t||''));
   const slug=v=>String(v||'section').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'section';
 
@@ -71,6 +72,9 @@
     phone:'<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
     publish:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20 15.3 15.3 0 010-20z"/>',
     close:'<path d="M18 6L6 18M6 6l12 12"/>',
+    eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+    eyeoff:'<path d="M3 3l18 18M10.6 10.6A3 3 0 0012 15a3 3 0 002.4-1.2M7.1 7.1C3.8 9.1 2 12 2 12s4 7 10 7c1.7 0 3.2-.5 4.5-1.2M14.2 5.3A10.4 10.4 0 0122 12s-1.2 2.1-3.4 4"/>',
+    logout:'<path d="M10 17l5-5-5-5M15 12H3"/><path d="M21 3v18h-7"/>',
     image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>',
     trash:'<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>',
     link:'<path d="M10 13a5 5 0 007.1 0l2-2a5 5 0 00-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 00-7.1 0l-2 2a5 5 0 007.1 7.1l1.1-1.1"/>',
@@ -329,6 +333,73 @@
   }
   function openSettings(){ buildSettings(); closeDrawers(); $('#setDrawer').classList.add('open'); $('#backdrop').classList.add('show'); }
 
+  /* ---------- login gate ---------- */
+  function setAuthState(ok){
+    document.body.classList.toggle('auth-ready', !!ok);
+    document.body.classList.toggle('auth-locked', !ok);
+    const shell=$('#adminShell'), login=$('#loginScreen');
+    if(shell) shell.setAttribute('aria-hidden', ok?'false':'true');
+    if(login) login.setAttribute('aria-hidden', ok?'true':'false');
+    if(ok) setTimeout(pushPreview,120);
+    else setTimeout(()=>{ clearLoginFields(); const u=$('#loginUser'); if(u) u.focus(); },80);
+  }
+  function clearLoginFields(){
+    const u=$('#loginUser'), p=$('#loginPass');
+    if(u){ u.value=''; u.setAttribute('autocomplete','off'); }
+    if(p){ p.value=''; p.setAttribute('autocomplete','new-password'); }
+  }
+  function wireAuth(){
+    const form=$('#loginForm'), user=$('#loginUser'), pass=$('#loginPass'), err=$('#loginError'), card=document.querySelector('.login-card'), toggle=$('#togglePass');
+    let loginTouched=false;
+    const markTouched=()=>{ loginTouched=true; };
+    const authed=(()=>{ try{return sessionStorage.getItem(AUTH_KEY)==='1';}catch(e){return false;} })();
+    setAuthState(authed);
+    if(!authed){
+      clearLoginFields();
+      setTimeout(()=>{ if(!loginTouched) clearLoginFields(); },250);
+      setTimeout(()=>{ if(!loginTouched) clearLoginFields(); },900);
+    }
+    [user,pass].forEach(el=>{
+      if(!el) return;
+      el.addEventListener('focus',markTouched);
+      el.addEventListener('input',markTouched);
+    });
+    if(toggle&&pass){
+      toggle.innerHTML=uiSvg('eye');
+      toggle.onclick=()=>{
+        const open=pass.type==='password';
+        pass.type=open?'text':'password';
+        toggle.innerHTML=uiSvg(open?'eyeoff':'eye');
+        toggle.setAttribute('aria-label', open?'Sembunyikan password':'Lihat password');
+        pass.focus();
+      };
+    }
+    if(form&&user&&pass){
+      form.onsubmit=e=>{
+        e.preventDefault();
+        const ok=user.value.trim()==='admin' && pass.value==='admin123';
+        if(ok){
+          try{sessionStorage.setItem(AUTH_KEY,'1');}catch(ex){}
+          if(err) err.textContent='';
+          setAuthState(true);
+          location.hash='editor';
+          toast('Login berhasil');
+        } else {
+          if(err) err.textContent='Username atau password salah.';
+          if(card){ card.classList.remove('bad-login'); void card.offsetWidth; card.classList.add('bad-login'); }
+          pass.select();
+        }
+      };
+    }
+    const logout=$('#btnLogout');
+    if(logout) logout.onclick=()=>{
+      try{sessionStorage.removeItem(AUTH_KEY);}catch(e){}
+      if(pass) pass.value='';
+      closeDrawers();
+      setAuthState(false);
+    };
+  }
+
   /* ---------- toolbar ---------- */
   function wire(){
     $('#btnTheme').onclick=openTheme; $('#themeClose').onclick=closeDrawers;
@@ -371,6 +442,29 @@
     window.addEventListener('mousemove',update,{passive:true});
     stage.addEventListener('pointerleave',()=>{ clearTimeout(idle); idle=setTimeout(hide,160); });
   }
+  function wireLoginMotion(){
+    const screen=$('#loginScreen');
+    if(!screen||screen._loginMotion) return;
+    screen._loginMotion=1;
+    let raf=0, idle=0, next=null;
+    const hide=()=>screen.classList.remove('login-lit');
+    const update=e=>{
+      const r=screen.getBoundingClientRect();
+      next={x:e.clientX-r.left,y:e.clientY-r.top};
+      if(raf) return;
+      raf=requestAnimationFrame(()=>{
+        raf=0;
+        screen.style.setProperty('--auth-x',next.x+'px');
+        screen.style.setProperty('--auth-y',next.y+'px');
+        screen.classList.add('login-lit');
+        clearTimeout(idle);
+        idle=setTimeout(hide,520);
+      });
+    };
+    window.addEventListener('pointermove',update,{passive:true});
+    window.addEventListener('mousemove',update,{passive:true});
+    screen.addEventListener('pointerleave',()=>{ clearTimeout(idle); idle=setTimeout(hide,160); });
+  }
 
   /* ---------- publish: write site/content.js live (needs serve.mjs) or fall back to download ---------- */
   async function publish(){
@@ -400,7 +494,7 @@
     const set=(id,ic,label)=>{ const b=$('#'+id); if(b) b.innerHTML=uiSvg(ic)+'<span>'+label+'</span>'; };
     set('btnAddSec','add','Section'); set('btnSettings','settings','Pengaturan'); set('btnTheme','theme','Tema');
     set('btnImport','importr','Import'); set('btnReset','reset','Reset'); set('btnExport','export','Export');
-    set('btnSite','site','Situs'); set('btnPublish','publish','Publish');
+    set('btnSite','site','Situs'); set('btnLogout','logout','Keluar'); set('btnPublish','publish','Publish');
     const dev=document.querySelectorAll('.seg button');
     if(dev[0]) dev[0].innerHTML=uiSvg('desktop')+'<span>Desktop</span>';
     if(dev[1]) dev[1].innerHTML=uiSvg('tablet')+'<span>Tablet</span>';
@@ -409,6 +503,6 @@
     document.querySelectorAll('.tbtn.ghost').forEach(b=>{ if(/Tutup|✕/.test(b.textContent)) b.innerHTML=uiSvg('close')+'<span>Tutup</span>'; });
   }
 
-  function boot(){ wire(); paintIcons(); wireStageMotion(); const f=frame(); f.addEventListener('load',()=>setTimeout(pushPreview,80)); [120,400,800,1500].forEach(t=>setTimeout(pushPreview,t)); }
+  function boot(){ wireAuth(); wire(); paintIcons(); wireStageMotion(); wireLoginMotion(); const f=frame(); f.addEventListener('load',()=>setTimeout(pushPreview,80)); [120,400,800,1500].forEach(t=>setTimeout(pushPreview,t)); }
   if(document.readyState!=='loading') boot(); else document.addEventListener('DOMContentLoaded',boot);
 })();
