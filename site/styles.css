@@ -46,6 +46,9 @@ header.scrolled{background:rgba(255,255,255,.86);box-shadow:0 8px 30px rgba(16,4
 .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
 .brand{display:flex;align-items:center;gap:12px}
 .brand-mark{width:46px;height:46px;flex:none;border-radius:12px;display:block;box-shadow:var(--shadow-sm)}
+/* uploaded logo image: clean circular white chip — looks good on light header AND dark footer */
+img.brand-mark{border-radius:50%;background:#fff;object-fit:contain;padding:3px;box-shadow:0 2px 8px rgba(16,40,70,.12)}
+footer img.brand-mark{box-shadow:0 2px 10px rgba(0,0,0,.35)}
 .brand-text strong{display:block;font-family:var(--font-heading),sans-serif;font-size:16px;color:var(--navy);letter-spacing:-.01em;line-height:1.1;white-space:nowrap}
 .brand-text small{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);font-weight:600;white-space:nowrap}
 .nav-links{display:flex;align-items:center;gap:34px;flex-shrink:0}

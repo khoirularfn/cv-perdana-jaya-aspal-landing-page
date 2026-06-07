@@ -4,9 +4,9 @@ window.DEFAULT_CONTENT = {
   "site": {
     "title": "CV. Perdana Jaya Aspal — Jasa Pengaspalan Profesional Jabodetabek",
     "description": "CV. Perdana Jaya Aspal — jasa pengaspalan hotmix profesional untuk perumahan, proyek konstruksi, dan kawasan industri di Jabodetabek. Survey & penawaran gratis.",
-    "brandName": "PERDANA JAYA",
-    "brandTagline": "Aspal · Jabodetabek",
-    "logo": "",
+    "brandName": "CV Perdana Jaya Aspal",
+    "brandTagline": "Jasa Pengaspalan · Jabodetabek",
+    "logo": "assets/logo.png",
     "waNumber": "6283838781282",
     "phone": "0838-3878-1282",
     "waButtonLabel": "WhatsApp",
